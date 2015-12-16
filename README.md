@@ -1,3 +1,3 @@
 # generator-riggerthegeek
 
-Generate code my way
+Create skeleton projects my way
