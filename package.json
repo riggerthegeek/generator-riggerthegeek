@@ -1,0 +1,41 @@
+{
+  "name": "generator-riggerthegeek",
+  "version": "0.0.0",
+  "description": "Create skeleton projects my way",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "riggerthegeek/generator-riggerthegeek",
+  "author": "Simon Emms <simon@simonemms.com>",
+  "scripts": {
+    "test": "grunt watch:test"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "ejs": "^2.3.4",
+    "html-wiring": "^1.2.0",
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6",
+    "valid-url": "^1.0.9",
+    "yeoman-generator": "^0.20.3",
+    "yosay": "^1.0.5"
+  },
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jscs": "^2.1.0",
+    "grunt-jsonlint": "^1.0.5",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-prompt": "^1.3.0",
+    "grunt-shell": "^1.1.2",
+    "grunt-timer": "^0.6.0",
+    "load-grunt-tasks": "^3.3.0",
+    "mocha": "^2.3.3",
+    "semver": "^5.0.3"
+  },
+  "preferGlobal": true
+}
