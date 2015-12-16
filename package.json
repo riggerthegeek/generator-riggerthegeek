@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Create skeleton projects my way",
   "license": "MIT",
-  "main": "app/index.js",
+  "main": "./generators/app/index.js",
   "repository": "riggerthegeek/generator-riggerthegeek",
   "author": "Simon Emms <simon@simonemms.com>",
   "scripts": {
