@@ -1,8 +1,7 @@
 /**
- * App
+ * NodeJS
  *
- * Prompts what type of application we want to
- * generate
+ * Builds a NodeJS application
  */
 
 "use strict";
@@ -19,6 +18,7 @@ var generator = require("yeoman-generator");
 
 /* Files */
 var helpers = require("../../helpers");
+var validators = require("../../validators");
 
 
 var Generator = generator.Base.extend({
@@ -28,30 +28,35 @@ var Generator = generator.Base.extend({
 
         greet: function () {
 
-            this.log(helpers.message("Let's create a " + chalk.bgRed.white("NodeJS") + " application", true));
+            this.myAnswers = {};
+
+            if (_.isObject(this.options.answers)) {
+                this.myAnswers = this.options.answers;
+            }
+
+            if (!this.options.nogreeting) {
+                this.log(helpers.message("Let's create a " + chalk.bgRed.white("NodeJS") + " application", true));
+            }
 
         }
 
     },
 
 
-    prompting: function () {
-
-        var done = this.async();
-
-        this.prompt([{
-            type: "input",
-            name: "name",
-            message: "What's the project name?"
-        }], function (answers) {
-
-            this.myAnswers = answers;
-
-            done();
-
-        }.bind(this));
-
-    },
+    //prompting: function () {
+    //
+    //    var done = this.async();
+    //
+    //    this.prompt([
+    //    ], function (answers) {
+    //
+    //        _.extend(this.myAnswers, answers);
+    //
+    //        done();
+    //
+    //    }.bind(this));
+    //
+    //},
 
 
     default: {
@@ -60,6 +65,32 @@ var Generator = generator.Base.extend({
 
 
     writing: {
+
+        saveConfig: function () {
+
+            this.myAnswers = _.reduce(this.myAnswers, function (result, answer, key) {
+
+                /* Set as undefined so parameter still available to the template */
+                if (answer === "") {
+                    answer = undefined;
+                }
+
+                result[key] = answer;
+
+                return result;
+
+            }, {});
+
+            this.config.set(this.myAnswers);
+            this.config.save();
+
+        },
+
+        copyTpl: function () {
+
+
+
+        }
 
     },
 
@@ -73,12 +104,16 @@ var Generator = generator.Base.extend({
 
         bye: function () {
 
-            this.log(helpers.message("All done. To run, type " +
-                chalk.bgRed.white("grunt serve") +
-                " or " +
-                chalk.bgRed.white("grunt module") +
-                " from the root")
-            );
+            if (!this.options.nogreeting) {
+
+                this.log(helpers.message("All done. To run, type " +
+                    chalk.bgRed.white("grunt serve") +
+                    " or " +
+                    chalk.bgRed.white("grunt module") +
+                    " from the root")
+                );
+
+            }
 
         }
 

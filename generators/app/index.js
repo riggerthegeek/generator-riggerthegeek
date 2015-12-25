@@ -20,14 +20,17 @@ var generator = require("yeoman-generator");
 
 /* Files */
 var helpers = require("../../helpers");
+var validators = require("../../validators");
 
 
-var tasks = helpers.getDirectories(path.join(__dirname, ".."));
+var tasks = helpers.getDirectories(path.join(__dirname, ".."), "app");
 
-_.remove(tasks, function (task) {
-    /* Remove this task */
-    return task === "app";
-});
+
+var languages = [
+    "es5",
+    "es6",
+    "typescript"
+];
 
 
 var Generator = generator.Base.extend({
@@ -53,9 +56,30 @@ var Generator = generator.Base.extend({
             name: "task",
             message: "What project do you want to install?",
             choices: tasks
+        }, {
+            type: "input",
+            name: "name",
+            message: "What's the project name?",
+            default: this.config.get("name") || this.appname,
+            validate: validators.required
+        }, {
+            type: "input",
+            name: "description",
+            message: "Project description",
+            default: this.config.get("description"),
+            validate: validators.required
+        }, {
+            type: "list",
+            name: "language",
+            message: "What language do you want to use?",
+            choices: languages,
+            default: this.config.get("language") || "typescript"
         }], function (answers) {
 
             this.myAnswers = answers;
+
+            /* Generate the npm package name */
+            answers.pkg = answers.name.replace(/\s/g, "-");
 
             done();
 
@@ -78,7 +102,12 @@ var Generator = generator.Base.extend({
 
         task: function () {
 
-            this.composeWith("riggerthegeek:" + this.myAnswers.task);
+            this.composeWith("riggerthegeek:" + this.myAnswers.task, {
+                options: {
+                    answers: this.myAnswers,
+                    nogreeting: true
+                }
+            });
 
         }
 
