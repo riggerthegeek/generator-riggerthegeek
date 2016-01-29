@@ -1,0 +1,13 @@
+{
+  "name": "<%= pkg %>",
+  "version": "0.0.0",
+  "description": "<%= description %>",
+  "main": "./<% if (compiled) { %>dist<% } else { %>src<% } %>/app",
+  "scripts": {
+    "test": "grunt watch:test"
+  },
+  "author": "<%= author_name %> <<%= author_email %>>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

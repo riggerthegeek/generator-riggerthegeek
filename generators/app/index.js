@@ -69,6 +69,21 @@ var Generator = generator.Base.extend({
             default: this.config.get("description"),
             validate: validators.required
         }, {
+            type: "input",
+            name: "author_name",
+            message: "Your name",
+            default: this.config.get("author_name"),
+            validate: validators.required
+        }, {
+            type: "input",
+            name: "author_email",
+            message: "Your email",
+            default: this.config.get("author_email"),
+            validate: validators.multi([
+                validators.required,
+                validators.email
+            ])
+        }, {
             type: "list",
             name: "language",
             message: "What language do you want to use?",
@@ -84,6 +99,11 @@ var Generator = generator.Base.extend({
             done();
 
         }.bind(this));
+
+    },
+
+
+    configuring: {
 
     },
 

@@ -32,6 +32,10 @@ var Generator = generator.Base.extend({
 
             if (_.isObject(this.options.answers)) {
                 this.myAnswers = this.options.answers;
+
+                var lang = this.myAnswers.language;
+
+                this.myAnswers.compiled = lang && lang !== "es5";
             }
 
             if (!this.options.nogreeting) {
@@ -43,20 +47,51 @@ var Generator = generator.Base.extend({
     },
 
 
-    //prompting: function () {
-    //
-    //    var done = this.async();
-    //
-    //    this.prompt([
-    //    ], function (answers) {
-    //
-    //        _.extend(this.myAnswers, answers);
-    //
-    //        done();
-    //
-    //    }.bind(this));
-    //
-    //},
+    prompting: function () {
+
+    },
+
+
+    configuring: {
+
+        metaFiles: function () {
+
+            var files = [{
+                tpl: "common/_editorconfig.txt",
+                dest: ".editorconfig"
+            }, {
+                tpl: "common/_gitattributes.txt",
+                dest: ".gitattributes"
+            }, {
+                tpl: "common/_gitignore.txt",
+                dest: ".gitignore"
+            }, {
+                tpl: "common/_jscsrc.txt",
+                dest: ".jscsrc"
+            }, {
+                tpl: "common/_jshintrc.txt",
+                dest: ".jshintrc"
+            }, {
+                tpl: "common/_npmignore.txt",
+                dest: ".npmignore"
+            }, {
+                tpl: "common/Gruntfile.txt",
+                dest: "Gruntfile.js"
+            }, {
+                tpl: "common/pkg.txt",
+                dest: "package.json"
+            }, {
+                tpl: "common/README.txt",
+                dest: "README.md"
+            }];
+
+            _.each(files, function (file) {
+                this.fs.copyTpl(this.templatePath(file.tpl), this.destinationPath(file.dest), this.myAnswers);
+            }, this);
+
+        }
+
+    },
 
 
     default: {
@@ -96,6 +131,16 @@ var Generator = generator.Base.extend({
 
 
     install: {
+
+        npmDev: function () {
+
+            this.npmInstall([
+                "grunt"
+            ], {
+                saveDev: true
+            });
+
+        }
 
     },
 
